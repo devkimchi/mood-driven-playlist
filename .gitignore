@@ -482,3 +482,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+*.slnLaunch
+.azure
+appsettings.Development.json
