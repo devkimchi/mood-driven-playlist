@@ -18,9 +18,12 @@ public static partial class WeatherForecastEndpoint
                     Random.Shared.Next(-20, 55),
                     summaries[Random.Shared.Next(summaries.Length)]
                 ))
-                .ToArray();
+                .ToList();
+
             return forecast;
         })
+        .Produces<List<WeatherForecast>>(statusCode: StatusCodes.Status200OK, contentType: "application/json")
+        .WithTags("weather")
         .WithName("GetWeatherForecast")
         .WithOpenApi();
 

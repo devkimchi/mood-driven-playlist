@@ -1,4 +1,6 @@
-﻿namespace MoodDrivenPlaylist.ApiApp.Models;
+﻿using Swashbuckle.AspNetCore.Filters;
+
+namespace MoodDrivenPlaylist.ApiApp.Models;
 
 public class EmbeddedPlayerDetails(string? playlistId = null)
 {
@@ -25,4 +27,17 @@ public class EmbeddedPlayerDetails(string? playlistId = null)
     public string? Allow { get; set; } = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
 
     public string? Loading { get; set; } = "lazy";
+}
+
+public class EmbeddedPlayerDetailsExample : IExamplesProvider<EmbeddedPlayerDetails>
+{
+    public EmbeddedPlayerDetails GetExamples()
+    {
+        var example = new EmbeddedPlayerDetails("55OvGbEdDvJNh3zratcxAq")
+        {
+            Title = $"Playlist by AOAI Mood Picker - {DateTimeOffset.UtcNow.ToLocalTime():yyyyMMddHHmmss}"
+        };
+
+        return example;
+    }
 }

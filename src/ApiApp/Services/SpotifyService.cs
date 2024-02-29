@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 
+using MoodDrivenPlaylist.ApiApp.Configs;
 using MoodDrivenPlaylist.ApiApp.Models;
 
 using SpotifyAPI.Web;
@@ -19,9 +20,9 @@ public interface ISpotifyService
     Task<EmbeddedPlayerDetails> GetEmbeddedPlayer(string query);
 }
 
-public class SpotifyService(IConfiguration config, HttpClient http) : ISpotifyService
+public class SpotifyService(SpotifySettings settings, HttpClient http) : ISpotifyService
 {
-    private readonly IConfiguration _config = config ?? throw new ArgumentNullException(nameof(config));
+    private readonly SpotifySettings _settings = settings ?? throw new ArgumentNullException(nameof(settings));
     private readonly HttpClient _http = http ?? throw new ArgumentNullException(nameof(http));
     private ISpotifyClient _spotify;
 
@@ -29,11 +30,11 @@ public class SpotifyService(IConfiguration config, HttpClient http) : ISpotifySe
     {
         if (this._spotify == null) await this.SetSpotifyClientAsync();
 
-        var request = new SearchRequest(SearchRequest.Types.Track, $"kpop {query}") { Market = this._config["Market"] };
+        var request = new SearchRequest(SearchRequest.Types.Track, $"kpop {query}") { Market = this._settings.Market };
         var response = await this._spotify.Search.Item(request).ConfigureAwait(false);
 
         var tracks = new List<FullTrack>();
-        for (var i = 0; i < Convert.ToInt32(this._config["MaxItems"]); i++)
+        for (var i = 0; i < this._settings.MaxItems; i++)
         {
             var j = RandomNumberGenerator.GetInt32(0, response.Tracks.Items.Count);
             var track = response.Tracks.Items[j];
