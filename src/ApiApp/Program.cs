@@ -1,9 +1,29 @@
+using MoodDrivenPlaylist.ApiApp.Endpoints.Spotify;
+using MoodDrivenPlaylist.ApiApp.Endpoints.Weather;
+using MoodDrivenPlaylist.ApiApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var config = builder.Configuration;
+
+builder.Services.AddSingleton<IConfiguration>(_ =>
+{
+    var spotify = config.GetSection("Spotify");
+
+    return spotify;
+});
+
+builder.Services.AddHttpClient<ISpotifyService, SpotifyService>(http =>
+{
+    var apim = config.GetSection("Azure").GetSection("ApiManagement");
+    http.BaseAddress = new Uri(apim["BaseUrl"]);
+    http.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apim["SubscriptionKey"]);
+});
 
 var app = builder.Build();
 
@@ -16,29 +36,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.GetWeatherForecast();
+app.CreatePlaylist();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
