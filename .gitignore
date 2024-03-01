@@ -486,3 +486,5 @@ $RECYCLE.BIN/
 *.slnLaunch
 .azure
 appsettings.Development.json
+appsettings.Production.json
+instances*.json
