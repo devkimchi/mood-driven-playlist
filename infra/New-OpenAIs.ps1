@@ -1,4 +1,4 @@
-# Provisions Azure OpenAI Services to all available regions and available models on repective locations
+# Provisions Azure OpenAI Service instances to all available regions and deploy models on repective locations
 Param(
     [string]
     [Parameter(Mandatory=$false)]
@@ -26,7 +26,7 @@ Param(
 )
 
 function Show-Usage {
-    Write-Output "    This gets list of the available locations for Azure OpenAI Services and available models on repective locations
+    Write-Output "    This provisions Azure OpenAI Service instances to all available regions and deploy models on repective locations
 
     Usage: $(Split-Path $MyInvocation.ScriptName -Leaf) ``
             [-ResourceGroupLocation <Resource group location>] ``
