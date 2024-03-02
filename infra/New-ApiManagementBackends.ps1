@@ -82,7 +82,7 @@ $openAIs | ForEach-Object {
 $repositoryRoot = git rev-parse --show-toplevel
 az deployment group create `
     -g $resourceGroupName `
-    -n $apimServiceName `
+    -n "apim-backend-$AzureEnvironmentName" `
     --template-file "$($repositoryRoot)/infra/apiManagementBackend.bicep" `
     --parameters name=$AzureEnvironmentName `
     --parameters backendServices="$($openAIInstances | ConvertTo-Json -Compress | ConvertTo-Json)"
