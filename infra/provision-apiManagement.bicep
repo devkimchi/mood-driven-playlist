@@ -21,27 +21,32 @@ module wrkspc './logAnalyticsWorkspace.bicep' = {
     name: name
     location: location
     tags: tags
+    appType: 'apim'
   }
 }
 
 module appins './applicationInsights.bicep' = {
   name: 'APIManagement_ApplicationInsights'
+  dependsOn: [
+    wrkspc
+  ]
   params: {
     name: name
     location: location
     tags: tags
-    workspaceId: wrkspc.outputs.id
+    appType: 'apim'
   }
 }
 
 module apim './apiManagement.bicep' = {
   name: 'ApiManagement_ApiManagement'
+  dependsOn: [
+    appins
+  ]
   params: {
     name: name
     location: location
     tags: tags
-    appInsightsId: appins.outputs.id
-    appInsightsInstrumentationKey: appins.outputs.instrumentationKey
     apiManagementPublisherName: apiManagementPublisherName
     apiManagementPublisherEmail: apiManagementPublisherEmail
     apiManagementPolicyFormat: apiManagementPolicyFormat
@@ -51,4 +56,3 @@ module apim './apiManagement.bicep' = {
 
 output id string = apim.outputs.id
 output name string = apim.outputs.name
-output subscriptionKey string = apim.outputs.subscriptionKey

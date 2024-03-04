@@ -7,6 +7,27 @@
     },
     "location": {
       "value": "${AZURE_LOCATION}"
+    },
+    "authProviderName": {
+      "value": "${CREDENTIAL_PROVIDER_NAME}"
+    },
+    "authProviderDisplayName": {
+      "value": "${CREDENTIAL_PROVIDER_DISPLAY_NAME}"
+    },
+    "spotifyClientId": {
+      "value": "${SPOTIFY_CLIENT_ID}"
+    },
+    "spotifyClientSecret": {
+      "value": "${SPOTIFY_CLIENT_SECRET}"
+    },
+    "spotifyScopes": {
+      "value": "${SPOTIFY_SCOPES}"
+    },
+    "spotifyAuthUrl": {
+      "value": "${SPOTIFY_AUTH_URL}"
+    },
+    "spotifyTokenUrl": {
+      "value": "${SPOTIFY_TOKEN_URL}"
     }
   }
 }

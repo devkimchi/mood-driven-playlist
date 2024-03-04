@@ -97,7 +97,7 @@ $locations | ForEach-Object {
                 -l $location `
                 --kind OpenAI `
                 --sku S0 `
-                --tags azd-env-name=$AzureEnvironmentName
+                --tags azd-env-name=$AzureEnvironmentName | ConvertFrom-Json
 
             Write-Output "$($cogsvc.name) instance has been provisioned"
         }

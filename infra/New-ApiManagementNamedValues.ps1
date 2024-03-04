@@ -56,15 +56,15 @@ if ($resourceGroupExists -eq $false) {
 $apimServiceName = "apim-$AzureEnvironmentName"
 $apim = az apim list -g $resourceGroupName --query "[?name == '$apimServiceName']" | ConvertFrom-Json
 if ($apim -eq $null) {
-    az apim create `
-    -g $resourceGroupName `
-    -n $apimServiceName `
-    --publisher-name "Dev Kimchi" `
-    --publisher-email 'apim@devkimchi.com' `
-    --enable-managed-identity `
-    --sku-name "Consumption" `
-    --sku-capacity 0 `
-    --tags azure-env-name=$AzureEnvironmentName
+    $apim = az apim create `
+        -g $resourceGroupName `
+        -n $apimServiceName `
+        --publisher-name "Dev Kimchi" `
+        --publisher-email 'apim@devkimchi.com' `
+        --enable-managed-identity `
+        --sku-name "Consumption" `
+        --sku-capacity 0 `
+        --tags azure-env-name=$AzureEnvironmentName
 }
 
 $openAIInstances = @()
@@ -83,7 +83,7 @@ $openAIInstances | ForEach-Object {
     $index = $openAIInstances.IndexOf($_)
 
     # Provision AOAI API key
-    az apim nv create `
+    $nv = az apim nv create `
         -g $resourceGroupName `
         -n $apimServiceName `
         --named-value-id "AOAI_API_KEY_$index" `
@@ -91,12 +91,16 @@ $openAIInstances | ForEach-Object {
         --value "$($_.ApiKey)" `
         --secret true
 
+    Write-Output "NamedValue, AOAI_API_KEY_$index, has been provisioned"
+
     # Provision AOAI instance name
-    az apim nv create `
+    $nv = az apim nv create `
         -g $resourceGroupName `
         -n $apimServiceName `
         --named-value-id "AOAI_NAME_$index" `
         --display-name "AOAI_NAME_$index" `
         --value "$($_.Name)" `
         --secret false
+
+    Write-Output "NamedValue, AOAI_NAME_$index, has been provisioned"
 }

@@ -4,6 +4,8 @@ param location string = resourceGroup().location
 param authProviderName string
 param authProviderDisplayName string
 param authProviderClientId string
+@secure()
+param authProviderClientSecret string
 param authProviderScopes string
 param authProviderAuthUrl string
 param authProviderTokenUrl string
@@ -16,6 +18,7 @@ var apiManagement = {
     displayName: authProviderDisplayName
     identityProvider: 'oauth2'
     clientId: authProviderClientId
+    clientSecret: authProviderClientSecret
     scopes: authProviderScopes
     authUrl: authProviderAuthUrl
     tokenUrl: authProviderTokenUrl
@@ -30,7 +33,6 @@ resource apim 'Microsoft.ApiManagement/service@2023-05-01-preview' existing = {
 resource apimcredentialmanager 'Microsoft.ApiManagement/service/authorizationProviders@2023-05-01-preview' = {
   name: apiManagement.credentialManager.name
   parent: apim
-  location: apiManagement.location
   properties: {
     displayName: apiManagement.credentialManager.displayName
     identityProvider: apiManagement.credentialManager.identityProvider
@@ -39,6 +41,7 @@ resource apimcredentialmanager 'Microsoft.ApiManagement/service/authorizationPro
       grantTypes: {
         authorizationCode: {
           clientId: apiManagement.credentialManager.clientId
+          clientSecret: apiManagement.credentialManager.clientSecret
           scopes: apiManagement.credentialManager.scopes
           authorizationUrl: apiManagement.credentialManager.authUrl
           refreshUrl: apiManagement.credentialManager.tokenUrl
@@ -48,3 +51,12 @@ resource apimcredentialmanager 'Microsoft.ApiManagement/service/authorizationPro
     }
   }
 }
+
+// resource apimcredentialmanagerauth 'Microsoft.ApiManagement/service/authorizationProviders/authorizations@2023-05-01-preview' = {
+//   name: apiManagement.credentialManager.name
+//   parent: apimcredentialmanager
+//   properties: {
+//     authorizationType: 'OAuth2'
+//     oauth2grantType: 'AuthorizationCode'
+//   }
+// }

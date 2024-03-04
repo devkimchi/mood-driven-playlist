@@ -97,14 +97,16 @@ $resourceGroupName = "rg-$AzureEnvironmentName"
 $repositoryRoot = git rev-parse --show-toplevel
 
 # Provision APIM policy
-az deployment group create `
+$apimpolicy = az deployment group create `
     -g $resourceGroupName `
     -n "apim-policy-$AzureEnvironmentName" `
     --template-file "$($repositoryRoot)/infra/apiManagementPolicy.bicep" `
-    --parameters name=$AzureEnvironmentName `
-    --parameters apiId=$ApiId `
-    --parameters operationId=$OperationId `
-    --parameters productId=$ProductId `
-    --parameters policyLevel=$PolicyLevel `
-    --parameters policyFormat=$PolicyFormat `
-    --parameters policyValue=$PolicyValue
+    --parameters name="$AzureEnvironmentName" `
+    --parameters apiId="$ApiId" `
+    --parameters operationId="$OperationId" `
+    --parameters productId="$ProductId" `
+    --parameters policyLevel="$PolicyLevel" `
+    --parameters policyFormat="$PolicyFormat" `
+    --parameters policyValue="$PolicyValue"
+
+Write-Output "API Management policy to $PolicyLevel has been provisioned"

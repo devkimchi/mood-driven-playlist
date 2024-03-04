@@ -3,8 +3,15 @@ param location string = resourceGroup().location
 
 param tags object = {}
 
+@allowed([
+  'web'
+  'api'
+  'apim'
+])
+param appType string = 'web'
+
 var workspace = {
-  name: 'wrkspc-${name}'
+  name: 'wrkspc-${name}-${appType}'
   location: location
   tags: tags
 }

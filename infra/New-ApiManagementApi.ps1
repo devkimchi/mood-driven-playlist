@@ -116,17 +116,19 @@ $resourceGroupName = "rg-$AzureEnvironmentName"
 $repositoryRoot = git rev-parse --show-toplevel
 
 # Provision APIM API
-az deployment group create `
+$apimapi = az deployment group create `
     -g $resourceGroupName `
     -n "apim-api-$AzureEnvironmentName" `
     --template-file "$($repositoryRoot)/infra/apiManagementApi.bicep" `
-    --parameters name=$AzureEnvironmentName `
-    --parameters apiName=$ApiName `
-    --parameters apiDisplayName=$ApiDisplayName `
-    --parameters apiDescription=$ApiDescription `
-    --parameters apiServiceUrl=$ApiServiceUrl `
-    --parameters apiPath=$ApiPath `
+    --parameters name="$AzureEnvironmentName" `
+    --parameters apiName="$ApiName" `
+    --parameters apiDisplayName="$ApiDisplayName" `
+    --parameters apiDescription="$ApiDescription" `
+    --parameters apiServiceUrl="$ApiServiceUrl" `
+    --parameters apiPath="$ApiPath" `
     --parameters apiSubscriptionRequired=$ApiSubscriptionRequired `
-    --parameters apiType=$ApiType `
-    --parameters apiFormat=$ApiFormat `
-    --parameters apiValue=$ApiValue
+    --parameters apiType="$ApiType" `
+    --parameters apiFormat="$ApiFormat" `
+    --parameters apiValue="$ApiValue"
+
+Write-Output "API Management API, $ApiDisplayName, has been provisioned"

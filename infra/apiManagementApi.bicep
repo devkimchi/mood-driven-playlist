@@ -52,6 +52,9 @@ var apiManagement = {
     format: apiFormat
     value: apiValue
   }
+  product: {
+    name: 'default'
+  }
 }
 
 // Get APIM
@@ -73,4 +76,17 @@ resource apimapi 'Microsoft.ApiManagement/service/apis@2023-05-01-preview' = {
     format: apiManagement.api.format
     value: apiManagement.api.value
   }
+}
+
+resource apimproduct 'Microsoft.ApiManagement/service/products@2023-05-01-preview' existing = {
+  name: apiManagement.product.name
+  parent: apim
+}
+
+resource apimproductapi 'Microsoft.ApiManagement/service/products/apis@2023-05-01-preview' = {
+  name: apiManagement.api.name
+  parent: apimproduct
+  dependsOn: [
+    apimapi
+  ]
 }

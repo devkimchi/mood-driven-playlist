@@ -3,14 +3,22 @@ param location string = resourceGroup().location
 
 param tags object = {}
 
-param workspaceId string
+@allowed([
+  'web'
+  'api'
+  'apim'
+])
+param appType string = 'web'
 
 var workspace = {
-  id: workspaceId
+  name: 'wrkspc-${name}-${appType}'
+}
+resource wrkspc 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
+  name: workspace.name
 }
 
 var appInsights = {
-  name: 'appins-${name}'
+  name: 'appins-${name}-${appType}'
   location: location
   tags: tags
 }
@@ -25,11 +33,9 @@ resource appins 'Microsoft.Insights/components@2020-02-02' = {
     Flow_Type: 'Bluefield'
     IngestionMode: 'LogAnalytics'
     Request_Source: 'rest'
-    WorkspaceResourceId: workspace.id
+    WorkspaceResourceId: wrkspc.id
   }
 }
 
 output id string = appins.id
 output name string = appins.name
-output instrumentationKey string = appins.properties.InstrumentationKey
-output connectionString string = appins.properties.ConnectionString

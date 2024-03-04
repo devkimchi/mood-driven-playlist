@@ -5,6 +5,7 @@ param backendServices array = [
   {
     name: 'cogsvc-playlist-location'
     url: 'https://location.api.cognitive.microsoft.com/openai'
+    apiKey: '{{AOAI_API_KEY_X}}'
   }
 ]
 
@@ -35,12 +36,22 @@ resource apimBackends 'Microsoft.ApiManagement/service/backends@2023-05-01-previ
       validateCertificateChain: true
       validateCertificateName: true
     }
+    credentials: {
+      header: {
+        'api-key': [
+          service.apiKey
+        ]
+      }
+    }
   }
 }]
 
 resource apimLoadbalancer 'Microsoft.ApiManagement/service/backends@2023-05-01-preview' = {
   name: 'loadbalancer'
   parent: apim
+  dependsOn: [
+    apimBackends
+  ]
   properties: {
     type: 'Pool'
     protocol: 'http'
