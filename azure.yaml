@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: mood-driven-playlist
+
+infra:
+  provider: bicep
+  path: infra
+  module: main
+
+services:
+  webapp:
+    host: appservice
+    project: ./src/WebApp/WebApp.csproj
+    language: dotnet
+    resourceName: "appsvc-${AZURE_ENV_NAME}-web"
+
+  apiapp:
+    host: appservice
+    project: ./src/ApiApp/ApiApp.csproj
+    language: dotnet
+    resourceName: "appsvc-${AZURE_ENV_NAME}-api"
+    
+hooks:
+  postprovision:
+    shell: pwsh
+    continueOnError: false
+    interactive: false
+    run: |
+      ./infra/Run-PostProvision.ps1 -AzureEnvironmentName "${env:AZURE_ENV_NAME}"

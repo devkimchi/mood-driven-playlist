@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <AssemblyName>MoodDrivenPlaylist.ApiApp</AssemblyName>
+    <RootNamespace>MoodDrivenPlaylist.ApiApp</RootNamespace>
+    <UserSecretsId>6a6962c9-43c7-4919-8953-493e06ce0013</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,3 @@
+Auth URL: https://accounts.spotify.com/authorize
+Token URL: https://accounts.spotify.com/api/token
+Scopes: user-read-private playlist-modify-private playlist-modify-public

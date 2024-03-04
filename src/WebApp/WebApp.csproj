@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <AssemblyName>MoodDrivenPlaylist.WebApp</AssemblyName>
+    <RootNamespace>MoodDrivenPlaylist.WebApp</RootNamespace>
+    <UserSecretsId>b83a6ef7-4ced-4ec6-b36d-ec326f12922d</UserSecretsId>
+  </PropertyGroup>
+
+</Project>

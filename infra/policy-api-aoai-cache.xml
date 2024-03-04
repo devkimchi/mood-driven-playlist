@@ -1,0 +1,65 @@
+<!--
+    IMPORTANT:
+    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.
+    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.
+    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.
+    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.
+    - To remove a policy, delete the corresponding policy statement from the policy document.
+    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.
+    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.
+    - Policies are applied in the order of their appearance, from the top down.
+    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.
+-->
+<policies>
+  <inbound>
+    <base />
+    <cache-lookup-value key="backend-counter" variable-name="backend-counter" />
+    <choose>
+      <when condition="@(context.Variables.ContainsKey("backend-counter") == false)">
+        <set-variable name="backend-counter" value="0" />
+        <cache-store-value key="backend-counter" value="0" duration="60" />
+      </when>
+    </choose>
+    <choose>
+      <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 0)">
+        <set-backend-service backend-id="{{AOAI-NAME-AUSTRALIAEAST}}" />
+        <set-variable name="backend-counter" value="1" />
+        <cache-store-value key="backend-counter" value="1" duration="60" />
+      </when>
+      <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 1)">
+        <set-backend-service backend-id="{{AOAI-NAME-CANADAEAST}}" />
+        <set-variable name="backend-counter" value="2" />
+        <cache-store-value key="backend-counter" value="2" duration="60" />
+      </when>
+      <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 2)">
+        <set-backend-service backend-id="{{AOAI-NAME-EASTUS}}" />
+        <set-variable name="backend-counter" value="3" />
+        <cache-store-value key="backend-counter" value="3" duration="60" />
+      </when>
+      <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 3)">
+        <set-backend-service backend-id="{{AOAI-NAME-FRANCECENTRAL}}" />
+        <set-variable name="backend-counter" value="4" />
+        <cache-store-value key="backend-counter" value="4" duration="60" />
+      </when>
+      <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 4)">
+        <set-backend-service backend-id="{{AOAI-NAME-SWEDENCENTRAL}}" />
+        <set-variable name="backend-counter" value="5" />
+        <cache-store-value key="backend-counter" value="5" duration="60" />
+      </when>
+      <otherwise>
+        <set-backend-service backend-id="{{AOAI-NAME-SWITZERLANDNORTH}}" />
+        <set-variable name="backend-counter" value="0" />
+        <cache-store-value key="backend-counter" value="0" duration="60" />
+      </otherwise>
+    </choose>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>
