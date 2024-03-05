@@ -6,4 +6,5 @@ public class ApiManagementSettings
 
     public string? BaseUrl { get; set; }
     public string? SubscriptionKey { get; set; }
+    public OpenAIInstanceSettings? OpenAI { get; set; }
 }

@@ -26,12 +26,20 @@ public static partial class SpotifyEndpoint
                 return Results.Unauthorized();
             }
 
-            var player = await spotify.GetEmbeddedPlayer(query).ConfigureAwait(false);
+            try
+            {
+                var player = await spotify.GetEmbeddedPlayer(query).ConfigureAwait(false);
 
-            return Results.Ok<EmbeddedPlayerDetails>(player);
+                return Results.Ok<EmbeddedPlayerDetails>(player);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
+            }
         })
         .Produces<EmbeddedPlayerDetails>(statusCode: StatusCodes.Status200OK, contentType: "application/json")
         .Produces(statusCode: StatusCodes.Status401Unauthorized)
+        .Produces<string>(statusCode: StatusCodes.Status500InternalServerError, contentType: "text/plain")
         .WithTags("spotify")
         .WithName("CreatePlaylist")
         .WithOpenApi(operation =>

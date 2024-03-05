@@ -18,7 +18,7 @@ https://cogsvc-playlist3860-australiaeast.openai.azure.com/openai/deployments/mo
     },
     {
       "role":"user",
-      "content": "Congratulations! You've been promoted to Principal Cloud Advocate."
+      "content": "I got all I need, you know nothing else can beat. The way that I feel when I'm dancing with my girls. Perfect energy, yeah, we flawless, yeah, we free. There's no better feeling in the whole wide world."
     }
   ]
 }

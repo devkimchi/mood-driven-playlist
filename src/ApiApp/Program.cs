@@ -2,11 +2,10 @@ using System.Reflection;
 
 using Microsoft.OpenApi.Models;
 
-using MoodDrivenPlaylist.ApiApp.Configs;
+using MoodDrivenPlaylist.ApiApp.Endpoints.OpenAI;
 using MoodDrivenPlaylist.ApiApp.Endpoints.Spotify;
 using MoodDrivenPlaylist.ApiApp.Endpoints.Weather;
 using MoodDrivenPlaylist.ApiApp.Extensions;
-using MoodDrivenPlaylist.ApiApp.Services;
 
 using Swashbuckle.AspNetCore.Filters;
 
@@ -53,32 +52,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var config = builder.Configuration;
-
-builder.Services.AddSingleton<AuthSettings>(_ =>
-{
-    var settings = config.GetSection(AuthSettings.Name).Get<AuthSettings>();
-
-    return settings;
-});
-builder.Services.AddSingleton<AzureSettings>(_ =>
-{
-    var settings = config.GetSection(AzureSettings.Name).Get<AzureSettings>();
-
-    return settings;
-});
-builder.Services.AddSingleton<SpotifySettings>(_ =>
-{
-    var settings = config.GetSection(SpotifySettings.Name).Get<SpotifySettings>();
-
-    return settings;
-});
-
-builder.Services.AddHttpClient<ISpotifyService, SpotifyService>(http =>
-{
-    var apim = builder.Services.BuildServiceProvider().GetService<AzureSettings>().ApiManagement;
-    http.BaseAddress = new Uri(apim.BaseUrl);
-    http.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apim.SubscriptionKey);
-});
+builder.Services.AddAppSettings(config);
+builder.Services.AddSpotifyService();
+builder.Services.AddOpenAIService();
 
 var app = builder.Build();
 app.UsePathBase(new PathString("/api"));
@@ -95,5 +71,6 @@ app.UseHttpsRedirection();
 
 app.GetWeatherForecast();
 app.CreatePlaylist();
+app.GetMoods();
 
 app.Run();

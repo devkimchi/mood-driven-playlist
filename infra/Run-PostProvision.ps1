@@ -77,12 +77,13 @@ Set-Content env:SPOTIFY_TOKEN_URL $config.infra.parameters.spotifyTokenUrl
 . $repositoryRoot/infra/New-ApiManagementApi.ps1 `
     -ResourceGroupLocation $env:AZURE_LOCATION `
     -AzureEnvironmentName $AZURE_ENV_NAME `
-    -ApiName aoai `
-    -ApiDisplayName AOAI `
+    -ApiName openai `
+    -ApiDisplayName OpenAI `
     -ApiDescription "Azure OpenAI API" `
     -ApiServiceUrl "https://$($env:AZURE_LOCATION).api.cognitive.microsoft.com/openai" `
-    -ApiPath aoai `
+    -ApiPath openai `
     -ApiSubscriptionRequired $true `
+    -ApiUseDefaultSubscriptionKey $false `
     -ApiType http `
     -ApiFormat "openapi+json-link" `
     -ApiValue "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/preview/2024-02-15-preview/inference.json"
@@ -92,14 +93,15 @@ Set-Content env:SPOTIFY_TOKEN_URL $config.infra.parameters.spotifyTokenUrl
     -ResourceGroupLocation $env:AZURE_LOCATION `
     -AzureEnvironmentName $AZURE_ENV_NAME `
     -ApiName spotify `
-    -ApiDisplayName SPOTIFY `
+    -ApiDisplayName Spotify `
     -ApiDescription "Spotify API" `
     -ApiServiceUrl "https://apim-$($AZURE_ENV_NAME).azure-api.net/spotify" `
     -ApiPath spotify `
     -ApiSubscriptionRequired $true `
+    -ApiUseDefaultSubscriptionKey $true `
     -ApiType http `
     -ApiFormat "openapi+json-link" `
-    -ApiValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/feature/init/infra/openapi-spotify.json"
+    -ApiValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/main/infra/infra/openapi-spotify.json"
 
 # Provision APIM Policy - AOAI
 . $repositoryRoot/infra/New-ApiManagementPolicy.ps1 `
@@ -108,7 +110,7 @@ Set-Content env:SPOTIFY_TOKEN_URL $config.infra.parameters.spotifyTokenUrl
     -ApiId aoai `
     -PolicyLevel api `
     -PolicyFormat "xml-link" `
-    -PolicyValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/feature/init/infra/policy-api-aoai-loadbalancer.xml"
+    -PolicyValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/main/infra/infra/policy-api-openai-loadbalancer.xml"
 
 # Provision APIM Policy - Spotify
 . $repositoryRoot/infra/New-ApiManagementPolicy.ps1 `
@@ -118,7 +120,7 @@ Set-Content env:SPOTIFY_TOKEN_URL $config.infra.parameters.spotifyTokenUrl
     -OperationId get-access-token `
     -PolicyLevel operation `
     -PolicyFormat "xml-link" `
-    -PolicyValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/feature/init/infra/policy-api-spotify-operation-accesstoken.xml"
+    -PolicyValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/main/infra/policy-api-spotify-operation-accesstoken.xml"
 
 # Provision APIM Credential Manager - Spotify
 . $repositoryRoot/infra/New-ApiManagementCredentialManager.ps1 `
