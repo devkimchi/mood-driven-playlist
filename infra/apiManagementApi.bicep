@@ -7,6 +7,7 @@ param apiDescription string = ''
 param apiServiceUrl string
 param apiPath string
 param apiSubscriptionRequired bool = true
+param apiUseDefaultSubscriptionKey bool = true
 
 @allowed([
   'graphql'
@@ -49,6 +50,10 @@ var apiManagement = {
     serviceUrl: apiServiceUrl
     path: apiPath
     subscriptionRequired: apiSubscriptionRequired
+    subscriptionKeyParameterNames: {
+      header: apiUseDefaultSubscriptionKey ? 'Ocp-Apim-Subscription-Key' : 'api-key'
+      query: apiUseDefaultSubscriptionKey ? 'subscription-key' : 'apk-key'
+    }
     format: apiFormat
     value: apiValue
   }
@@ -73,6 +78,10 @@ resource apimapi 'Microsoft.ApiManagement/service/apis@2023-05-01-preview' = {
     serviceUrl: apiManagement.api.serviceUrl
     path: apiManagement.api.path
     subscriptionRequired: apiManagement.api.subscriptionRequired
+    subscriptionKeyParameterNames: {
+      header: apiManagement.api.subscriptionKeyParameterNames.header
+      query: apiManagement.api.subscriptionKeyParameterNames.query
+    }
     format: apiManagement.api.format
     value: apiManagement.api.value
   }

@@ -16,22 +16,22 @@
     <set-variable name="urlId" value="@(new Random(context.RequestId.GetHashCode()).Next(0, 6))" />
     <choose>
       <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 0)">
-        <set-backend-service backend-id="{{AOAI-NAME-AUSTRALIAEAST}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_0}}" />
       </when>
       <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
-        <set-backend-service backend-id="{{AOAI-NAME-CANADAEAST}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_1}}" />
       </when>
       <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 2)">
-        <set-backend-service backend-id="{{AOAI-NAME-EASTUS}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_2}}" />
       </when>
       <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 3)">
-        <set-backend-service backend-id="{{AOAI-NAME-FRANCECENTRAL}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_3}}" />
       </when>
       <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 4)">
-        <set-backend-service backend-id="{{AOAI-NAME-SWEDENCENTRAL}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_4}}" />
       </when>
       <otherwise>
-        <set-backend-service backend-id="{{AOAI-NAME-SWITZERLANDNORTH}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_5}}" />
       </otherwise>
     </choose>
   </inbound>

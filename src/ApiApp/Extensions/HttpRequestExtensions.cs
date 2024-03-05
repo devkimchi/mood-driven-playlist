@@ -14,4 +14,11 @@ public static class HttpRequestExtensions
 
         return uriBuilder.Uri.AbsoluteUri;
     }
+
+    public static bool GetFeatureFlag(this HttpRequest req, string key)
+    {
+        if (req == null) return false;
+
+        return bool.TryParse(req.Query[key].ToString(), out var result) && result;
+    }
 }

@@ -22,32 +22,32 @@
     </choose>
     <choose>
       <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 0)">
-        <set-backend-service backend-id="{{AOAI-NAME-AUSTRALIAEAST}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_0}}" />
         <set-variable name="backend-counter" value="1" />
         <cache-store-value key="backend-counter" value="1" duration="60" />
       </when>
       <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 1)">
-        <set-backend-service backend-id="{{AOAI-NAME-CANADAEAST}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_1}}" />
         <set-variable name="backend-counter" value="2" />
         <cache-store-value key="backend-counter" value="2" duration="60" />
       </when>
       <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 2)">
-        <set-backend-service backend-id="{{AOAI-NAME-EASTUS}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_2}}" />
         <set-variable name="backend-counter" value="3" />
         <cache-store-value key="backend-counter" value="3" duration="60" />
       </when>
       <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 3)">
-        <set-backend-service backend-id="{{AOAI-NAME-FRANCECENTRAL}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_3}}" />
         <set-variable name="backend-counter" value="4" />
         <cache-store-value key="backend-counter" value="4" duration="60" />
       </when>
       <when condition="@(Convert.ToInt32(context.Variables["backend-counter"]) == 4)">
-        <set-backend-service backend-id="{{AOAI-NAME-SWEDENCENTRAL}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_4}}" />
         <set-variable name="backend-counter" value="5" />
         <cache-store-value key="backend-counter" value="5" duration="60" />
       </when>
       <otherwise>
-        <set-backend-service backend-id="{{AOAI-NAME-SWITZERLANDNORTH}}" />
+        <set-backend-service backend-id="{{AOAI_NAME_5}}" />
         <set-variable name="backend-counter" value="0" />
         <cache-store-value key="backend-counter" value="0" duration="60" />
       </otherwise>

@@ -12,7 +12,7 @@ param authProviderName string
 param authProviderDisplayName string
 param spotifyClientId string
 @secure()
-param authProviderClientSecret string
+param spotifyClientSecret string
 param spotifyScopes string
 param spotifyAuthUrl string
 param spotifyTokenUrl string

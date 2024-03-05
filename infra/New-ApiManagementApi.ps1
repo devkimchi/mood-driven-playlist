@@ -31,6 +31,10 @@ Param(
     [bool]
     [Parameter(Mandatory=$false)]
     $ApiSubscriptionRequired = $true,
+
+    [bool]
+    [Parameter(Mandatory=$false)]
+    $ApiUseDefaultSubscriptionKey = $true,
     
     [string]
     [Parameter(Mandatory=$false)]
@@ -55,40 +59,43 @@ function Show-Usage {
     Write-Output "    This provisions Policies to Azure API Management for Azure OpenAI
 
     Usage: $(Split-Path $MyInvocation.ScriptName -Leaf) ``
-            [-ResourceGroupLocation     <Resource group location>] ``
-            [-AzureEnvironmentName      <Azure environment name>] ``
-            [-ApiName                   <API name>] ``
-            [-ApiDisplayName            <API display name>] ``
-            [-ApiDescription            <API description>] ``
-            [-ApiServiceUrl             <API service URL>] ``
-            [-ApiPath                   <API path>] ``
-            [-ApiSubscriptionRequired   <Value indicationg whether to use subscription or not>] ``
-            [-ApiType                   <API type>] ``
-            [-ApiFormat                 <API format type>] ``
-            [-ApiValue                  <API content in either YAML or JSON format>] ``
+            [-ResourceGroupLocation         <Resource group location>] ``
+            [-AzureEnvironmentName          <Azure environment name>] ``
+            [-ApiName                       <API name>] ``
+            [-ApiDisplayName                <API display name>] ``
+            [-ApiDescription                <API description>] ``
+            [-ApiServiceUrl                 <API service URL>] ``
+            [-ApiPath                       <API path>] ``
+            [-ApiSubscriptionRequired       <Value indicationg whether to use subscription or not>] ``
+            [-ApiUseDefaultSubscriptionKey] <Value indicationg whether to use default subscription key or not>] ``
+            [-ApiType                       <API type>] ``
+            [-ApiFormat                     <API format type>] ``
+            [-ApiValue                      <API content in either YAML or JSON format>] ``
 
             [-Help]
 
     Options:
-        -ResourceGroupLocation      Resource group name.
-                                    Default value is `'koreacentral`'
-        -AzureEnvironmentName       Azure environment name.
-        -ApiName                    API name.
-        -ApiDisplayName             API display name>
-        -ApiDescription             API description
-        -ApiServiceUrl              API service URL
-        -ApiPath                    API path
-        -ApiSubscriptionRequired    Value indicationg whether to use subscription or not.
-                                    Default value is `'true`'
-        -ApiType                    API type.
-                                    Either `'graphql'`, `'grpc'`, `'http'`, `'odata'`, `'soap'`, or `'websocket'`.
-                                    Default value is `'http'`
-        -ApiFormat                  API format type.
-                                    Either `'graphql-link'`, `'grpc'`, `'grpc-link'`, `'odata'`, `'odata-link'`, `'openapi'`, `'openapi+json'`, `'openapi+json-link'`, `'openapi-link'`, `'swagger-json'`, `'swagger-link-json'`, `'wadl-link-json'`, `'wadl-xml'`, `'wsdl'`, or `'wsdl-link'`.
-                                    Default value is `'openapi-link'`
-        -ApiValue                   API content in either YAML or JSON format.
+        -ResourceGroupLocation          Resource group name.
+                                        Default value is `'koreacentral`'
+        -AzureEnvironmentName           Azure environment name.
+        -ApiName                        API name.
+        -ApiDisplayName                 API display name>
+        -ApiDescription                 API description
+        -ApiServiceUrl                  API service URL
+        -ApiPath                        API path
+        -ApiSubscriptionRequired        Value indicationg whether to use subscription or not.
+                                        Default value is `'true`'
+        -ApiUseDefaultSubscriptionKey   Value indicationg whether to use default subscription key or not.
+                                        Default value is `'true`'
+        -ApiType                        API type.
+                                        Either `'graphql'`, `'grpc'`, `'http'`, `'odata'`, `'soap'`, or `'websocket'`.
+                                        Default value is `'http'`
+        -ApiFormat                      API format type.
+                                        Either `'graphql-link'`, `'grpc'`, `'grpc-link'`, `'odata'`, `'odata-link'`, `'openapi'`, `'openapi+json'`, `'openapi+json-link'`, `'openapi-link'`, `'swagger-json'`, `'swagger-link-json'`, `'wadl-link-json'`, `'wadl-xml'`, `'wsdl'`, or `'wsdl-link'`.
+                                        Default value is `'openapi-link'`
+        -ApiValue                       API content in either YAML or JSON format.
 
-        -Help:                  Show this message.
+        -Help:                          Show this message.
 "
 
     Exit 0
@@ -127,6 +134,7 @@ $apimapi = az deployment group create `
     --parameters apiServiceUrl="$ApiServiceUrl" `
     --parameters apiPath="$ApiPath" `
     --parameters apiSubscriptionRequired=$ApiSubscriptionRequired `
+    --parameters apiUseDefaultSubscriptionKey=$ApiUseDefaultSubscriptionKey `
     --parameters apiType="$ApiType" `
     --parameters apiFormat="$ApiFormat" `
     --parameters apiValue="$ApiValue"
