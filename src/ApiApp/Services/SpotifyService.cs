@@ -38,6 +38,11 @@ public class SpotifyService(SpotifySettings settings, HttpClient http) : ISpotif
         {
             var j = RandomNumberGenerator.GetInt32(0, response.Tracks.Items.Count);
             var track = response.Tracks.Items[j];
+            if (tracks.Count > 0 && (tracks.Any(p => p.Id == track.Id) || tracks.Any(p => p.Album.Id == track.Album.Id)))
+            {
+                continue;
+            }
+
             tracks.Add(track);
         }
 
@@ -85,7 +90,7 @@ public class SpotifyService(SpotifySettings settings, HttpClient http) : ISpotif
         var trackUris = tracks.Select(track => track.Uri).ToList();
         var snapshot = await this.AddTracksToPlaylist(playlist.Id, trackUris).ConfigureAwait(false);
 
-        var player = new EmbeddedPlayerDetails(playlist.Id) { Title = title };
+        var player = new EmbeddedPlayerDetails() { Title = title, PlaylistId = playlist.Id };
 
         return player;
     }

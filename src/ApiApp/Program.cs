@@ -4,7 +4,6 @@ using Microsoft.OpenApi.Models;
 
 using MoodDrivenPlaylist.ApiApp.Endpoints.OpenAI;
 using MoodDrivenPlaylist.ApiApp.Endpoints.Spotify;
-using MoodDrivenPlaylist.ApiApp.Endpoints.Weather;
 using MoodDrivenPlaylist.ApiApp.Extensions;
 
 using Swashbuckle.AspNetCore.Filters;
@@ -69,7 +68,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.GetWeatherForecast();
 app.CreatePlaylist();
 app.GetMoods();
 

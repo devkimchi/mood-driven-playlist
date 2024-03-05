@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DDB2D96C-2FFC-439B-8625-134A3CB72C64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "src\WebApp\WebApp.csproj", "{44DECFBA-25B8-457D-9A69-7AE4C66144D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "src\WebApp\WebApp.csproj", "{44DECFBA-25B8-457D-9A69-7AE4C66144D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiApp", "src\ApiApp\ApiApp.csproj", "{47392658-FC1C-454C-AADB-922C7A2F51D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiApp", "src\ApiApp\ApiApp.csproj", "{47392658-FC1C-454C-AADB-922C7A2F51D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
