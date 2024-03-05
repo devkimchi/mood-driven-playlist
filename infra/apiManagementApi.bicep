@@ -52,7 +52,7 @@ var apiManagement = {
     subscriptionRequired: apiSubscriptionRequired
     subscriptionKeyParameterNames: {
       header: apiUseDefaultSubscriptionKey ? 'Ocp-Apim-Subscription-Key' : 'api-key'
-      query: apiUseDefaultSubscriptionKey ? 'subscription-key' : 'apk-key'
+      query: apiUseDefaultSubscriptionKey ? 'subscription-key' : 'api-key'
     }
     format: apiFormat
     value: apiValue

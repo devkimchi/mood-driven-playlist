@@ -80,7 +80,7 @@ Set-Content env:SPOTIFY_TOKEN_URL $config.infra.parameters.spotifyTokenUrl
     -ApiName api `
     -ApiDisplayName Backend `
     -ApiDescription "Backend API" `
-    -ApiServiceUrl "https://localhost:5051/api" `
+    -ApiServiceUrl "appsvc-$AZURE_ENV_NAME-api.azurewebsites.net/api" `
     -ApiPath api `
     -ApiSubscriptionRequired $true `
     -ApiUseDefaultSubscriptionKey $true `
@@ -122,7 +122,7 @@ Set-Content env:SPOTIFY_TOKEN_URL $config.infra.parameters.spotifyTokenUrl
 . $repositoryRoot/infra/New-ApiManagementPolicy.ps1 `
     -ResourceGroupLocation $env:AZURE_LOCATION `
     -AzureEnvironmentName $AZURE_ENV_NAME `
-    -ApiId aoai `
+    -ApiId openai `
     -PolicyLevel api `
     -PolicyFormat "xml-link" `
     -PolicyValue "https://raw.githubusercontent.com/devkimchi/mood-driven-playlist/main/infra/policy-api-openai-loadbalancer.xml"
