@@ -1,6 +1,12 @@
 @MoodDrivenPlaylist_ApiApp_HostAddress = http://localhost:5050
 
-GET {{MoodDrivenPlaylist_ApiApp_HostAddress}}/weatherforecast/
-Accept: application/json
+# @prompt ApiKey
 
-###
+POST {{MoodDrivenPlaylist_ApiApp_HostAddress}}/api/moods
+Accept: application/json
+Content-Type: application/json
+x-api-key: {{ApiKey}}
+
+{
+  "description": "I got all I need, you know nothing else can beat. The way that I feel when I'm dancing with my girls. Perfect energy, yeah, we flawless, yeah, we free. There's no better feeling in the whole wide world."
+}
